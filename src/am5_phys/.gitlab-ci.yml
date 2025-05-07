@@ -1,0 +1,48 @@
+before_script:
+  - hostname
+
+
+.ncrc_build: &ncrc_build
+  script:
+    - source /usr/share/lmod/lmod/init/bash
+    - module unload cray-netcdf cray-hdf5 PrgEnv-aocc PrgEnv-cray PrgEnv-gnu PrgEnv-intel PrgEnv-nvhpc PrgEnv-nvidia
+    - module load PrgEnv-${COMPILER_FAMILY}
+    - module swap ${COMPILER_NAME} ${COMPILER_NAME}/${COMPILER_VERSION}
+    - module load cray-hdf5 cray-netcdf/4.9.0.7
+    - mkdir local
+    - git clone https://github.com/NOAA-GFDL/FMS.git FMS
+    - cd FMS
+    - autoreconf --install
+    - ./configure --prefix=${CI_BUILDS_DIR}/local
+    - make
+    - make install
+    - cd ..
+    - autoreconf --install
+    - ./configure
+    - make
+
+
+build:ncrc:intel23classic:debug:
+  stage: build
+  tags:
+    - am5phys
+  rules:
+    - if: "$CI_COMMIT_BRANCH"
+      when: never
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"'
+      when: always
+  variables:
+    CC: cc
+    COMPILER_FAMILY: intel
+    COMPILER_NAME: intel-classic
+    COMPILER_VERSION: 2023.1.0
+    FC: ftn
+    F77: ftn
+    FCFLAGS: "-I${CI_BUILDS_DIR}/local/include -O0"
+    FFLAGS: "-I${CI_BUILDS_DIR}/local/include -O0"
+    LDFLAGS: "-L${CI_BUILDS_DIR}/local/lib"
+  <<: *ncrc_build
+  artifacts:
+    paths:
+      - .libs/libatmos_phys.so
+      - ./*.mod
