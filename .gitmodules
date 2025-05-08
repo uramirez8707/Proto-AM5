@@ -28,3 +28,6 @@
 [submodule "src/SIS2"]
 	path = src/SIS2
 	url = https://github.com/NOAA-GFDL/SIS2.git
+[submodule "src/FMScoupler"]
+	path = src/FMScoupler
+	url = https://github.com/NOAA-GFDL/FMScoupler.git
