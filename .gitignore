@@ -29,3 +29,11 @@ exec/MOM6/*
 
 exec/SIS2/*
 !exec/SIS2/Makefile
+
+run/*
+!run/data_table
+!run/diag_table
+!run/field_table
+!run/input.nml
+!run/RESTART/*
+!run/INPUT/*
