@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/tcsh
 
 cd run
 mkdir -p RESTART
@@ -22,6 +22,9 @@ cp ../exec/am5f5b7r0_beres_cqa_compile.x .
 # ice_model_nml::layout = 96,6
 
 # NOTE: layout must be divisible by io_layout
+
+# This is needed for GAEA on c5
+# setenv FI_VERBS_PREFER_XRC 0
 
 srun --ntasks=576 --cpus-per-task=2 --export=ALL,OMP_NUM_THREADS=2 ./am5f5b7r0_beres_cqa_compile.x | & tee fms.out
 
