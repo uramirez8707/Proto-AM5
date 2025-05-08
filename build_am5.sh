@@ -11,6 +11,6 @@ echo " "
 echo "Sourcing setup_environment.sh"
 source env.sh
 
-#make clean
-#make -j 4
+make clean
+make -j 4
 
