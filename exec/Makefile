@@ -1,10 +1,10 @@
-# Makefile for experiment_name
+# Makefile for am5f5b7r0_beres_cqa_compile
 SRCROOT = ${BASEDIR}/src/
 BUILDROOT = ${BASEDIR}/exec/
 MK_TEMPLATE = ${BASEDIR}/exec/intel-classic.mk
 include $(MK_TEMPLATE)
 
-experiment_name.x:  FMScoupler/libFMScoupler.a SIS2/libSIS2.a atmos_drivers/libatmos_drivers.a GFDL_atmos_cubed_sphere/libGFDL_atmos_cubed_sphere.a am5_phys/libam5_phys.a land_lad2/libland_lad2.a MOM6/libMOM6.a ice_param/libice_param.a icebergs/libicebergs.a FMS/libFMS.a 
+am5f5b7r0_beres_cqa_compile.x:  FMScoupler/libFMScoupler.a SIS2/libSIS2.a atmos_drivers/libatmos_drivers.a GFDL_atmos_cubed_sphere/libGFDL_atmos_cubed_sphere.a am5_phys/libam5_phys.a land_lad2/libland_lad2.a MOM6/libMOM6.a ice_param/libice_param.a icebergs/libicebergs.a FMS/libFMS.a 
 	$(LD) $^ $(LDFLAGS) -o $@ $(STATIC_LIBS)
 FMScoupler/libFMScoupler.a:  FMS/libFMS.a GFDL_atmos_cubed_sphere/libGFDL_atmos_cubed_sphere.a atmos_drivers/libatmos_drivers.a am5_phys/libam5_phys.a land_lad2/libland_lad2.a SIS2/libSIS2.a MOM6/libMOM6.a ice_param/libice_param.a icebergs/libicebergs.a  FORCE
 	$(MAKE) SRCROOT=$(SRCROOT) BUILDROOT=$(BUILDROOT) MK_TEMPLATE=$(MK_TEMPLATE) --directory=FMScoupler $(@F)
@@ -61,5 +61,5 @@ distclean:
 	$(RM) -r SIS2
 	$(RM) -r icebergs
 	$(RM) -r FMScoupler
-	$(RM) -r experiment_name
+	$(RM) -r am5f5b7r0_beres_cqa_compile
 	$(RM) -r Makefile 
